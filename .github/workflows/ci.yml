@@ -1,0 +1,54 @@
+name: CI for RISC-V simulator project
+on:
+  push:
+    branches:
+        - '*'
+    pull_request:
+        - master
+
+jobs:
+    setup:
+        name: Setup project
+        runs-on: self-hosted
+        env:
+            CC: gcc
+            CXX: g++
+        steps:
+            - uses: actions/checkout@v3
+            - run: /bin/bash .ci/setup.sh
+    build:
+        needs: setup
+        name: Build project
+        runs-on: self-hosted
+        env:
+            CC: gcc
+            CXX: g++
+        steps:
+            - run: /bin/bash .ci/build.sh
+    run-tests:
+        needs: setup
+        name: Run tests
+        runs-on: self-hosted
+        env:
+            CC: gcc
+            CXX: g++
+        steps:
+            - run: /bin/bash .ci/run_tests.sh
+    format-check:
+        needs: setup
+        name: Check clang-format
+        runs-on: self-hosted
+        env:
+            CC: gcc
+            CXX: g++
+        steps:
+            - run: /bin/bash .ci/format_check.sh
+    tidy-check:
+        needs: setup
+        name: Check clang-tidy
+        runs-on: self-hosted
+        env:
+            CC: gcc-12
+            CXX: g++-12
+        steps:
+            - run: /bin/bash .ci/tidy_check.sh
