@@ -139,7 +139,7 @@ end.parse!
 isa_file = "#{options[:root_path]}/isa/isa.yaml"
 template_path = options[:template_path]
 
-isa_content = YAML.load_file(isa_file)
+isa_content = YAML.load_file(isa_file, aliases: true)
 template = File.read(template_path)
 generator = Generator.new(template, isa_content)
 
