@@ -39,7 +39,8 @@ void Hart::RunImpl(Mode mode, bool need_to_measure)
                 if (decodedBB.getHotness() < compiler::Compiler::MAX_HOTNESS) {
                     decodedBB.incrementHotness();
                 }
-                if (decodedBB.getHotness() == compiler::Compiler::MAX_HOTNESS) {
+                if (decodedBB.getHotness() == compiler::Compiler::MAX_HOTNESS &&
+                    decodedBB.getCompileStatus() != interpreter::DecodedBB::CompileStatus::COMPILED) {
                     compiler_.run(decodedBB);
                 }
                 if (decodedBB.getCompileStatus() == interpreter::DecodedBB::CompileStatus::COMPILED) {

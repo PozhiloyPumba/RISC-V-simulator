@@ -12,13 +12,12 @@ public:
 
     void run(interpreter::DecodedBB &decodedBB);
 
-    void compileInstr(const Instruction &instr, size_t instr_offset);
-    void compileInvoke(interpreter::DecodedBB::CompiledEntry executor, size_t instr_offset);
+    void compileInstr(asmjit::x86::Compiler &compiler_, const Instruction &instr, size_t instr_offset);
+    void compileInvoke(asmjit::x86::Compiler &compiler_, interpreter::DecodedBB::CompiledEntry executor, size_t instr_offset);
 
 private:
     interpreter::Executor *executor_;
     asmjit::JitRuntime runtime_;
-    asmjit::x86::Compiler compiler_;
     asmjit::x86::Gp executor_p_;
     asmjit::x86::Gp pc_p_;
     asmjit::x86::Gp registers_p_;
